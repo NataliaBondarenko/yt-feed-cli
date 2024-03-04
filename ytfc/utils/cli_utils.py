@@ -13,10 +13,11 @@ def open_file(path: str) -> List[str]:
     with open(path, encoding="utf-8") as f:
         lines = f.readlines()
         for i in lines:
+            i = i.strip()
             # skip comments and newlines
-            if i == '\n' or i.startswith('#'):
+            if i == '' or i.startswith('#'):
                 continue
-            yt_ids.append(i.strip())
+            yt_ids.append(i)
     return yt_ids
 
 

@@ -1,0 +1,30 @@
+[project]
+name = "ytfc"
+version = "1.0.0"
+description = "This CLI parses RSS feeds and outputs a list of YouTube videos, shorts, and live streams."
+requires-python = ">=3.7"
+dependencies = [
+    "requests==2.31.0",
+    "lxml==5.1.0",
+]
+license = {text = "MIT License"}
+
+[tool.setuptools.packages.find]
+# package folder(s) are placed directly under the project root
+# where = ["."]
+exclude = ["tests*"]
+# prevent any folder without an __init__.py file from being scanned
+namespaces = false
+
+# The following would provide a command line executable called `ytfc`
+# which executes the function `main` from this package when invoked.
+[project.scripts]
+ytfc = "ytfc.__main__:main"
+
+[build-system]
+requires = ["setuptools>=64.0.0"]
+build-backend = "setuptools.build_meta"
+
+
+# pip v 21.3 (2021-10-11)
+# Support editable installs for projects that have a pyproject.toml and use a build backend that supports PEP 660.

@@ -1,5 +1,7 @@
 from typing import Tuple, Union, List
 
+from ytfc.utils.regex_patterns import USERNAME_PATTERN, CHANNEL_PATTERN, PL_PATTERN, RD_PATTERN, OL_PATTERN
+
 
 def open_file(path: str) -> List[str]:
     """Reading identifiers from a text file.
@@ -42,13 +44,22 @@ def check_duplicates(ids: List[str]) -> List[str]:
 
 
 def check_ids(ids: List[str], path: str) -> Union[Tuple[List[str], None], Tuple[None, List[str]]]:
-    """A simple check to see if an ID starts with allowed characters.
+    """A simple check to see if an ID contains allowed characters.
 
-    Channel prefixes:
-    @, UC
-    Playlist prefixes:
-    PL, UU, RD, OL, FL
-    [-_0-9A-Za-z]
+    @username (handle):
+      https://support.google.com/youtube/answer/11585688
+    Channel ID:
+      UC + 22 characters.
+    IDs based on channel ID:
+      UU, FL, UULF, UULV, UUSH, UULP, UUPV, UUPS, UUMO, UUMF, UUMV, UUMS + 22
+    PL:
+      The shortest playlist identifier is PL + 16. Newer IDs are PL + 32.
+    RD and OL:
+      Mix IDs or album/music playlist IDs vary in length.
+      Minimum mix ID is RD + 11 (video id).
+      Music:
+      OLAK5uy_[klmn]{1}[A-Za-z0-9_-]{32}
+      RDCLAK5uy_[klmn]{1}[A-Za-z0-9_-]{32}
     
     :param ids: args.ids, a list of IDs
     :param path: args.read, path to a text file with a list of channel or playlists IDs
@@ -64,8 +75,21 @@ def check_ids(ids: List[str], path: str) -> Union[Tuple[List[str], None], Tuple[
     elif ids:
         yt_ids = ids
     invalid_ids = []
+    
     for i in yt_ids:
-        if i.startswith(('@', 'UC', 'PL', 'UU', 'RD', 'OL', 'FL')):
+        if i.startswith('@'):
+            m = USERNAME_PATTERN.match(i)
+        elif i.startswith(('UC', 'UU', 'FL')):
+            m = CHANNEL_PATTERN.match(i)
+        elif i.startswith('PL'):
+            m = PL_PATTERN.match(i)
+        elif i.startswith('RD'):
+            m = RD_PATTERN.match(i)
+        elif i.startswith('OLAK5uy_'):
+            m = OL_PATTERN.match(i)
+        else:
+            m = None
+        if m:
             continue
         else:
             invalid_ids.append(i)

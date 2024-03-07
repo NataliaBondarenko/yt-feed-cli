@@ -1,4 +1,8 @@
 """
+Author: https://github.com/NataliaBondarenko
+MIT License
+2024
+
 This CLI parses RSS feeds and outputs a list of YouTube videos, shorts, and live streams.
 
 Get the list of available options.
@@ -39,10 +43,6 @@ If errors occur, error messages will still be printed.
   Using `--no-print`:
     ytfc -i @youtube -s <local path>/output.txt -np
     ytfc -i @youtube -s <local path>/output.html -np
-
-Author: https://github.com/NataliaBondarenko
-2024
-MIT License
 """
 import argparse
 import os.path
@@ -51,7 +51,21 @@ from ytfc.utils.decorators import python_exceptions
 from ytfc.utils.cli_utils import check_ids
 from ytfc.utils.output_utils import generate_output, redirect_output, save_text, save_html
 
-      
+
+supported_ids_message = '\nSupported identifiers\n\n' \
+                        'For all identifiers below, ' \
+                        'the allowed characters are A–Z, a–z, 0–9, underscores, and hyphens.\n' \
+                        '- Identifiers beginning with PL must contain 16 or 32 characters after the prefix.\n' \
+                        '- Identifiers beginning with RD must contain at least 11 characters after the prefix.\n' \
+                        '- OLAK5uy_ must be followed by one of these letters: ' \
+                        'k, l, m, n, and 32 characters after the letter.\n' \
+                        '- UC, UU, UULF, UULV, UUSH, UULP, UUPV, UUPS, UUMO, UUMF, UUMV, UUMS, FL ' \
+                        'must be followed by 22 characters after these prefixes.\n' \
+                        '- The channel username must start with @ and be between 3 and 30 characters. ' \
+                        'A dot character is also allowed. @username is not case-sensitive, ' \
+                        'unlike the identifiers listed earlier.\n'
+
+     
 @python_exceptions
 def main(*args):
     parser = argparse.ArgumentParser(
@@ -85,7 +99,8 @@ def main(*args):
     args = parser.parse_args()
     
     if not args.ids and not args.read:
-        parser.exit(status=0, message=f'\n{parser.prog} 1.0.0\n{__doc__}')
+        parser.exit(status=0,
+                    message=f'\n{parser.prog} 1.0.0{__doc__}{supported_ids_message}')
         
     if args.read:
         if not os.path.exists(args.read):
@@ -110,9 +125,8 @@ def main(*args):
     invalid_ids, yt_ids = check_ids(args.ids, args.read)
     if invalid_ids:
         parser.exit(status=1,
-                    message=f'Invalid id(s): {", ".join(invalid_ids)}.\n'
-                            'Channel IDs must start with @ or UC: @youtube or UCBR8-60-B28hp2BmDPdntcQ.\n'
-                            'Playlist IDs must start with PL, UU, RD, OL, FL.\n')
+                    message=f'\nUnsupported id(s): {", ".join(invalid_ids)}.\n'
+                    f'{supported_ids_message}')
 
     print(f'\nID(s): {", ".join(yt_ids)}\n\n')
     

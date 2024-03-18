@@ -1,6 +1,7 @@
 from typing import Tuple, Union, List
 
-from ytfc.utils.regex_patterns import USERNAME_PATTERN, CHANNEL_PATTERN, PL_PATTERN, RD_PATTERN, OL_PATTERN
+from ytfc.utils.regex_patterns import (USERNAME_PATTERN, CHANNEL_PATTERN, PL_PATTERN,
+                                       RD_PATTERN, OL_PATTERN, RDCLAK_PATTERN)
 
 
 def open_file(path: str) -> List[str]:
@@ -83,6 +84,8 @@ def check_ids(ids: List[str], path: str) -> Union[Tuple[List[str], None], Tuple[
             m = CHANNEL_PATTERN.match(i)
         elif i.startswith('PL'):
             m = PL_PATTERN.match(i)
+        elif i.startswith('RDCLAK5uy_'):
+            m = RDCLAK_PATTERN.match(i)
         elif i.startswith('RD'):
             m = RD_PATTERN.match(i)
         elif i.startswith('OLAK5uy_'):

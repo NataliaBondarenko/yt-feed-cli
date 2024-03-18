@@ -57,6 +57,8 @@ supported_ids_message = '\nSupported identifiers\n\n' \
                         'the allowed characters are A–Z, a–z, 0–9, underscores, and hyphens.\n' \
                         '- Identifiers beginning with PL must contain 16 or 32 characters after the prefix.\n' \
                         '- Identifiers beginning with RD must contain at least 11 characters after the prefix.\n' \
+                        '- RDCLAK5uy_ must be followed by one of these letters: ' \
+                        'k, l, m, n, and 32 characters after the letter.\n' \
                         '- OLAK5uy_ must be followed by one of these letters: ' \
                         'k, l, m, n, and 32 characters after the letter.\n' \
                         '- UC, UU, UULF, UULV, UUSH, UULP, UUPV, UUPS, UUMO, UUMF, UUMV, UUMS, FL ' \

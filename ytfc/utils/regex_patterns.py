@@ -13,5 +13,10 @@ PL_PATTERN = re.compile(regular_list_pattern)
 mix_pattern = '^RD[a-zA-Z0-9_-]{11,}$'
 RD_PATTERN = re.compile(mix_pattern)
 
+# albums
 music_list_pattern = '^OLAK5uy_[klmn]{1}[A-Za-z0-9_-]{32}$'
 OL_PATTERN = re.compile(music_list_pattern)
+
+# YouTube Music channel
+music_mix_pattern = '^RDCLAK5uy_[klmn]{1}[A-Za-z0-9_-]{32}$'
+RDCLAK_PATTERN = re.compile(music_mix_pattern)

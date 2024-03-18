@@ -56,7 +56,7 @@ def generate_html(ids: List[str], output: Generator[str, None, None]) -> Generat
                   f'<button><a href="{video_block[1].split("video url: ")[1]}" target="_blank" rel="noopener noreferrer nofollow">' \
                   'open in new tab</a></button></div>'  # close video-url
             # title
-            yield f'<div class="video-title">{video_block[0].split("video title: ")[1]}</div>'
+            yield f'<div class="video-title">{video_block[0].split("video title: ", maxsplit=1)[1]}</div>'
             if len(video_block) > 2:  # verbose
                 # published
                 yield f'<div>{video_block[2]}</div>'
@@ -69,7 +69,7 @@ def generate_html(ids: List[str], output: Generator[str, None, None]) -> Generat
                     yield f'<div>{video_block[5]}</div>'
                 else:
                     yield f'<div class="description-popup" onclick="showPopup(event)">show/hide description' \
-                          f'<span class="popup-text">{video_block[5].split("description: ")[1]}</span></div>'
+                          f'<span class="popup-text">{video_block[5].split("description: ", maxsplit=1)[1]}</span></div>'
             yield '<br></div>'  # close video-block
         # yt id
         elif i.startswith('=== '):

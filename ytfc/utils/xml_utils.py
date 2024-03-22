@@ -136,4 +136,5 @@ def get_feed_videos(root, verbose: bool, number: Union[int, None]) -> Generator[
                   f'description: {description}'
         else:
             yield f'video title: {entry.find(feed_items["video_title"]).text}\n' \
-                  f'video url: {entry.find(feed_items["video_link"]).get("href")}'
+                  f'video url: {entry.find(feed_items["video_link"]).get("href")}\n' \
+                  f'published: {entry.find(feed_items["video_published"]).text}'

@@ -201,6 +201,7 @@ playlist created by: YouTube
 
 video title: YouTube Rewind: The Ultimate 2016 Challenge | #YouTubeRewind
 video url: https://www.youtube.com/watch?v=_GuOjXYl5ew
+published: 2016-12-07T18:00:03+00:00
 ```
 
 

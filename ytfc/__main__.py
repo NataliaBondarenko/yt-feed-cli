@@ -11,7 +11,7 @@ Get the list of available options.
 Features
 
 Get the feed for a specific channel or playlist by its ID.
-Output: feed info, entries - title, URL.
+Output: feed info, entries - title, URL, published.
   Using `--ids`:
     ytfc -i UCBR8-60-B28hp2BmDPdntcQ UULPBR8-60-B28hp2BmDPdntcQ 
   Using `--ids` with @username:

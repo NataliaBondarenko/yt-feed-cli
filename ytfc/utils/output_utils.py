@@ -57,9 +57,9 @@ def generate_html(ids: List[str], output: Generator[str, None, None]) -> Generat
                   'open in new tab</a></button></div>'  # close video-url
             # title
             yield f'<div class="video-title">{video_block[0].split("video title: ", maxsplit=1)[1]}</div>'
-            if len(video_block) > 2:  # verbose
-                # published
-                yield f'<div>{video_block[2]}</div>'
+            # published
+            yield f'<div>{video_block[2]}</div>'
+            if len(video_block) > 3:  # verbose
                 # views
                 yield f'<div>{video_block[3]}</div>'
                 # likes

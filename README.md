@@ -83,7 +83,7 @@ options:
   -r FILE, --read FILE  File path to a text file containing a list of channel or playlist IDs.
   -n N, --number N      Limit the number of entries in the output.
   -v, --verbose         Display details about the feed and its entries.
-  -s FILE, --save FILE  File path to save the results. Creates a txt or html file with the given name.
+  -s FILE, --save FILE  File path to save the results. Creates a txt, html, or json file with the given name.
   -np, --no-print       Skip printing results when saving to a file.
 ```
 
@@ -219,15 +219,15 @@ Creates a text file and saves the result as an HTML document. Feed entries will 
 ytfc -i @youtube -s <local path>/output.html
 ```
 
+Creates a text file and saves the result as JSON.
+```
+ytfc -i @youtube -s <local path>/output.json
+```
 
 ### `--no-print`
 
 Skip printing results when saving to a file. If errors occur, error messages will still be printed.
 
 ```
-ytfc -i @youtube -s <local path>/output.txt -np
-```
-
-```
-ytfc -i @youtube -s <local path>/output.html -np
+ytfc -i @youtube -s <path> -np
 ```

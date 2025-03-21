@@ -34,7 +34,7 @@ def make_request(url: str, response_type: str) -> Tuple[Union[str, bytes, None],
         code = r.status_code
         if code == 404:  # 404  Not Found
             print('The requested playlist ID, channel ID, or @username was not found.\n'
-                  'Maybe there is no such playlist or channel at all, or you made a typo in the ID.')
+                  'Maybe there is no such playlist or channel at all, or you made a typo.')
         elif code == 500:  # 500 Internal Server Error
             print('YouTube.com is currently unable to fulfill the request.')
         # for all HTTP errors

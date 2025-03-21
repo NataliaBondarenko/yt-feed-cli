@@ -32,24 +32,24 @@ Output: feed info, entries - title, URL, published, views, likes, description.
   Using `--verbose`:
     ytfc -i UULPBR8-60-B28hp2BmDPdntcQ -v
 
-Save the result to a file (txt or html).
+Save the result to a file (txt, html, json).
 Creates a text file in the given location with the given name.
   Using `--save`:
     ytfc -i @youtube -s <local path>/output.txt
     ytfc -i @youtube -s <local path>/output.html
+    ytfc -i @youtube -s <local path>/output.json
 
 Skip printing results when saving to a file.
 If errors occur, error messages will still be printed.
   Using `--no-print`:
-    ytfc -i @youtube -s <local path>/output.txt -np
-    ytfc -i @youtube -s <local path>/output.html -np
+    ytfc -i @youtube -s <path> -np
 """
 import argparse
 import os.path
 
 from ytfc.utils.decorators import python_exceptions
 from ytfc.utils.cli_utils import check_ids
-from ytfc.utils.output_utils import generate_output, redirect_output, save_text, save_html
+from ytfc.utils.output_utils import generate_output, redirect_output, save_text, save_html, save_json
 
 
 supported_ids_message = '\nSupported identifiers\n\n' \
@@ -120,8 +120,8 @@ def main(*args):
             parser.exit(status=1,
                         message=f'The directory path {dir_path} does not exist. Check that the path is entered correctly.\n')
         extension = os.path.splitext(args.save)[1][1:]
-        if extension not in ['txt', 'html']:
-            parser.exit(status=1, message=f'Saving to {args.save}. The file extension must be txt or html.\n')
+        if extension not in ['txt', 'html', 'json']:
+            parser.exit(status=1, message=f'Saving to {args.save}. The file extension must be txt, html, or json.\n')
             
     # both --read and --ids can be used
     invalid_ids, yt_ids = check_ids(args.ids, args.read)
@@ -132,7 +132,11 @@ def main(*args):
 
     print(f'\nID(s): {", ".join(yt_ids)}\n\n')
     
-    # saving starts with the first string returned by generators
+    # for txt and html:
+    # saving starts from the first string returned by the output generator
+    # for json:
+    # dict creation starts with the first string returned by the output generator
+    # dict is saved in a json file when the dict structure is complete
     if args.save:
         if args.no_print:
             print('Please wait.\n')
@@ -143,6 +147,8 @@ def main(*args):
             save_text(args.save, output, yt_ids)
         elif extension == 'html':
             save_html(args.save, output, yt_ids)
+        elif extension == 'json':
+            save_json(args.save, output, yt_ids)
         print(f'Saving the results to {args.save}.\nDone.')
     else:
         for i in generate_output(yt_ids, args.verbose, args.number):

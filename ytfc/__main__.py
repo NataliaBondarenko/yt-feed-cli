@@ -63,9 +63,12 @@ supported_ids_message = '\nSupported identifiers\n\n' \
                         'k, l, m, n, and 32 characters after the letter.\n' \
                         '- UC, UU, UULF, UULV, UUSH, UULP, UUPV, UUPS, UUMO, UUMF, UUMV, UUMS, FL ' \
                         'must be followed by 22 characters after these prefixes.\n' \
-                        '- The channel username must start with @ and be between 3 and 30 characters. ' \
-                        'A dot character is also allowed. @username is not case-sensitive, ' \
-                        'unlike the identifiers listed earlier.\n'
+                        'Channel @handle:\n' \
+                        'Handle must start with @ and can contain Latin and non-Latin characters.\n' \
+                        'It can also include: numbers 0-9, underscores, hyphens, periods, and Latin middle dots (·). \n' \
+                        '@handle is not case-sensitive, unlike the identifiers listed earlier.\n' \
+                        'Length from 3 to 30 characters (see exceptions in the answer below).\n' \
+                        'Handle naming guidelines: https://support.google.com/youtube/answer/11585688\n'
 
      
 @python_exceptions

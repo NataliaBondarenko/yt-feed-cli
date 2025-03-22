@@ -1,6 +1,6 @@
 from typing import Tuple, Union, List
 
-from ytfc.utils.regex_patterns import (CHANNEL_PATTERN, PL_PATTERN,
+from ytfc.utils.regex_patterns import (USERNAME_PATTERN, CHANNEL_PATTERN, PL_PATTERN,
                                        RD_PATTERN, OL_PATTERN, RDCLAK_PATTERN)
 
 
@@ -81,7 +81,10 @@ def check_ids(ids: List[str], path: str) -> Union[Tuple[List[str], None], Tuple[
     
     for i in yt_ids:
         if i.startswith('@'):
-            m = True
+            if i.isascii():
+                m = USERNAME_PATTERN.match(i)
+            else:
+                m = True
         elif i.startswith(('UC', 'UU', 'FL')):
             m = CHANNEL_PATTERN.match(i)
         elif i.startswith('PL'):

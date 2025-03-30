@@ -203,3 +203,10 @@ slider_block = """
   </div>
 </div>
 """
+
+buttons_block = """
+<div class="video-url">
+  <button class="video-popup" onclick="openWindow('{video_id}')">open in new window</button>
+  <button><a href="{video_url}" target="_blank" rel="noopener noreferrer nofollow">open in new tab</a></button>
+</div>
+"""

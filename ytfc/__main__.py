@@ -49,7 +49,7 @@ import os.path
 
 from ytfc.utils.decorators import python_exceptions
 from ytfc.utils.cli_utils import check_ids
-from ytfc.utils.output_utils import generate_output, redirect_output, save_text, save_html, save_json
+from ytfc.utils.output_utils import Output, TXTOutput, HTMLOutput, JSONOutput
 
 
 supported_ids_message = '\nSupported identifiers\n\n' \
@@ -106,6 +106,11 @@ def main(*args):
     if not args.ids and not args.read:
         parser.exit(status=0,
                     message=f'\n{parser.prog} 1.0.0{__doc__}{supported_ids_message}')
+
+    if not args.save and args.no_print:
+        parser.exit(status=1,
+                    message=f'\nInvalid argument combination: --save={args.save}, --no_print={args.no_print}. '
+                            'Not saving and not printing output at the same time.\n')
         
     if args.read:
         if not os.path.exists(args.read):
@@ -133,29 +138,24 @@ def main(*args):
                     message=f'\nUnsupported id(s): {", ".join(invalid_ids)}.\n'
                     f'{supported_ids_message}')
 
-    print(f'\nID(s): {", ".join(yt_ids)}\n\n')
-    
-    # for txt and html:
-    # saving starts from the first string returned by the output generator
-    # for json:
-    # dict creation starts with the first string returned by the output generator
-    # dict is saved in a json file when the dict structure is complete
+    print(f'\nID(s): {", ".join(yt_ids)}\n')
+
     if args.save:
         if args.no_print:
             print('Please wait.\n')
-            output = generate_output(yt_ids, args.verbose, args.number)
-        else:
-            output = redirect_output(yt_ids, args.verbose, args.number)
         if extension == 'txt':
-            save_text(args.save, output, yt_ids)
+            o = TXTOutput(yt_ids)
         elif extension == 'html':
-            save_html(args.save, output, yt_ids)
+            o = HTMLOutput(yt_ids)
         elif extension == 'json':
-            save_json(args.save, output, yt_ids)
-        print(f'Saving the results to {args.save}.\nDone.')
+            o = JSONOutput(yt_ids)
+        o.generate_output(args.verbose, args.number, args.no_print, save=True)
+        print(f'Saving the results to {args.save}.')
+        o.save_to_file(args.save)
+        print('Done.')
     else:
-        for i in generate_output(yt_ids, args.verbose, args.number):
-            print(i)
+        o = Output(yt_ids)
+        o.generate_output(args.verbose, args.number, no_print=False, save=False)
     parser.exit(status=0)
 
         

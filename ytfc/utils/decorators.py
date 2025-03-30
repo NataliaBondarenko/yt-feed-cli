@@ -9,6 +9,9 @@ def python_exceptions(func):
 
     If the xml response is unusual, there will be Python errors in xml_utils functions.
     AttributeError if root.find() is None.
+
+    Unexpected errors in request_utils.make_request:
+    Throws an exception for the error that occurred, unless it is a 404.
     
     :param func: executable function
     :return: CLI stops
@@ -21,7 +24,7 @@ def python_exceptions(func):
             print('The execution of the program was interrupted.')
         except Exception as e:
             print('Unfortunately, an unexpected error occurred while retrieving the data.')
-            print(f'{e.__class__.__name__}: {e}.')
+            print(f'{e.__class__.__name__}: {e}')
     return wrapper
 
 

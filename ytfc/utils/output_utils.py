@@ -66,7 +66,7 @@ class Output:
         }
         return base_dict
 
-    def generate_output(self, verbose: bool, number: Union[int, None], no_print: bool, save: bool) -> None:
+    def generate_output(self, *, verbose: bool, number: Union[int, None], no_print: bool, save: bool) -> None:
         """Display and store the results of feed parsing for list of ids.
 
         :param verbose: get more details about the feed and its entries

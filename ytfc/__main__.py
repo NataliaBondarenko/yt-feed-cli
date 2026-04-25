@@ -149,13 +149,13 @@ def main(*args):
             o = HTMLOutput(yt_ids)
         elif extension == 'json':
             o = JSONOutput(yt_ids)
-        o.generate_output(args.verbose, args.number, args.no_print, save=True)
+        o.generate_output(verbose=args.verbose, number=args.number, no_print=args.no_print, save=True)
         print(f'Saving the results to {args.save}.')
         o.save_to_file(args.save)
         print('Done.')
     else:
         o = Output(yt_ids)
-        o.generate_output(args.verbose, args.number, no_print=False, save=False)
+        o.generate_output(verbose=args.verbose, number=args.number, no_print=False, save=False)
     parser.exit(status=0)
 
         

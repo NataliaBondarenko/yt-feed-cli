@@ -240,12 +240,13 @@ class HTMLOutput(Output):
                         # In xml - https://i[number].ytimg.com/vi/VIDEO_ID/hqdefault.jpg (480x360).
                         # hqdefault.jpg - this is a thumbnail, or the first frame of the video.
                         # frames used in html: hqdefault.jpg, hq1.jpg, hq2.jpg, hq3.jpg
-                        f.write(slider_block.format(
-                            video_id=entry["video_url"].split("https://www.youtube.com/watch?v=")[1]))
+                        if entry["video_url"].startswith("https://www.youtube.com/shorts/"):
+                            video_id = entry["video_url"].split("https://www.youtube.com/shorts/")[1]
+                        else:
+                            video_id = entry["video_url"].split("https://www.youtube.com/watch?v=")[1]
+                        f.write(slider_block.format(video_id=video_id))
                         # url
-                        f.write(buttons_block.format(
-                            video_id=entry["video_url"].split("https://www.youtube.com/watch?v=")[1],
-                            video_url=entry["video_url"]))  # close video-url
+                        f.write(buttons_block.format(video_id=video_id, video_url=entry["video_url"]))
                         # title
                         f.write(f'<div class="video-title">{entry["video_title"]}</div>\n')
                         # published

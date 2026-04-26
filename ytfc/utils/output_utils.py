@@ -91,8 +91,8 @@ class Output:
                         self.output["feeds"][channel_or_playlist_id].update(
                             {"error_message": f'Failed to get data from: https://www.youtube.com/{channel_or_playlist_id}'})
                     if not no_print:
-                        print(f'Failed to get data from: https://www.youtube.com/{channel_or_playlist_id}\n')
                         print(error_msg)
+                    print(f'Failed to get data from: https://www.youtube.com/{channel_or_playlist_id}\n')
                     continue
                 xml_url = self.xml_handler.get_channel_xml_link(r_text)
                 if not xml_url:
@@ -100,8 +100,7 @@ class Output:
                     if save:
                         self.output["feeds"][channel_or_playlist_id].update(
                             {"error_message": f'Failed to get channel id UCxxx for: https://www.youtube.com/{channel_or_playlist_id}'})
-                    if not no_print:
-                        print(f'Failed to get channel id UCxxx for: https://www.youtube.com/{channel_or_playlist_id}\n')
+                    print(f'Failed to get channel id UCxxx for: https://www.youtube.com/{channel_or_playlist_id}\n')
                     continue
             elif channel_or_playlist_id.startswith('UC'):
                 xml_url = f'https://www.youtube.com/feeds/videos.xml?channel_id={channel_or_playlist_id}'
@@ -114,8 +113,8 @@ class Output:
                     self.output["feeds"][channel_or_playlist_id].update(
                         {"error_message": f'Failed to get data from: {xml_url}'})
                 if not no_print:
-                    print(f'Failed to get data from: {xml_url}\n')
                     print(error_msg)
+                print(f'Failed to get data from: {xml_url}\n')
                 continue
             root = self.xml_handler.get_xml_feed(r_content)
             if root is not None:
@@ -146,9 +145,8 @@ class Output:
                 # parsing errors
                 if save:
                     self.output["feeds"][channel_or_playlist_id].update(
-                        {"error_message": f'Failed to get feed from: {xml_url}\n'})
-                if not no_print:
-                    print(f'Failed to get feed from: {xml_url}\n')
+                        {"error_message": f'Failed to get feed from: {xml_url}'})
+                print(f'Failed to get feed from: {xml_url}\n')
 
     def save_to_file(self, filename: str):
         raise NotImplementedError

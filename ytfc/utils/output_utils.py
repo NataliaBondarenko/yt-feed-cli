@@ -246,7 +246,7 @@ class HTMLOutput(Output):
                             video_id = entry["video_url"].split("https://www.youtube.com/watch?v=")[1]
                         f.write(slider_block.format(video_id=video_id))
                         # url
-                        f.write(buttons_block.format(video_id=video_id, video_url=entry["video_url"]))
+                        f.write(buttons_block.format(video_url=entry["video_url"]))
                         # title
                         f.write(f'<div class="video-title">{entry["video_title"]}</div>\n')
                         # published

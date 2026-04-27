@@ -80,14 +80,10 @@ html_begin = """<!DOCTYPE html>
         visibility: visible;
       }
       
-      /* open in new window, open in new tab */
+      /* open in new tab */
       div.video-url {
         text-align: center; /* center buttons */
         margin: 10px auto;
-      }
-      /* open in new window */
-      button.video-popup {
-        margin-right: 5px;
       }
 
       /* video thumbnail and frames */
@@ -141,15 +137,6 @@ html_begin = """<!DOCTYPE html>
 <script type="text/javascript">
   function showPopup(event) {
     event.target.children[0].classList.toggle("show");
-  }
-  function openWindow(videoId) {
-    let url = "https://www.youtube.com/embed/" + videoId;
-    let width = screen.width / 1.5;
-    let height = screen.height / 1.5;
-    var left = (screen.width - width) / 2;
-    var top = (screen.height - height) / 4;
-    var newWindow = window.open(url, "center window",
-      "resizable = yes, width=" + width + ", height=" + height + ", top=" + top + ", left=" + left);
   }
 </script>
 <script type="text/javascript">
@@ -206,7 +193,6 @@ slider_block = """
 
 buttons_block = """
 <div class="video-url">
-  <button class="video-popup" onclick="openWindow('{video_id}')">open in new window</button>
   <button><a href="{video_url}" target="_blank" rel="noopener noreferrer nofollow">open in new tab</a></button>
 </div>
 """

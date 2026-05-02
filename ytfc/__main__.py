@@ -11,7 +11,6 @@ Get the list of available options.
 Features
 
 Get the feed for a specific channel or playlist by its ID.
-Output: feed info, entries - title, URL, published.
   Using `--ids`:
     ytfc -i UCBR8-60-B28hp2BmDPdntcQ UULPBR8-60-B28hp2BmDPdntcQ 
   Using `--ids` with @username:
@@ -21,16 +20,30 @@ Output: feed info, entries - title, URL, published.
     Identifiers stored in the file must be separated by newlines.
   Combined `--ids` and `--read` options:
     ytfc -i @youtube -r <local path to text file>
-    
+Output for each ID:
+feed info:
+  feed type, feed title,
+  channel title or playlist created by
+entries info:
+  video title, video url, published
+
+Display details about feed entries.
+  Using `--verbose`:
+    ytfc -i UULPBR8-60-B28hp2BmDPdntcQ -v
+Output for each ID:
+feed info:
+  feed type, feed title,
+  channel title or playlist created by,
+  channel url or playlist creator url,
+  channel created or playlist created
+entries info:
+  video title, video url, published,
+  views, likes, description
+
 Limit the number of entries in the output.
 The number of entries in the RSS feed is up to 15.
   Using `--number`:
     ytfc -i UULPBR8-60-B28hp2BmDPdntcQ -n 2
-
-Display details about feed entries.
-Output: feed info, entries - title, URL, published, views, likes, description.
-  Using `--verbose`:
-    ytfc -i UULPBR8-60-B28hp2BmDPdntcQ -v
 
 Save the result to a file (txt, html, json).
 Creates a text file in the given location with the given name.
@@ -53,6 +66,7 @@ from ytfc.utils.output_utils import Output, TXTOutput, HTMLOutput, JSONOutput
 
 
 supported_ids_message = '\nSupported identifiers\n\n' \
+                        'Playlists:\n' \
                         'For all identifiers below, ' \
                         'the allowed characters are A–Z, a–z, 0–9, underscores, and hyphens.\n' \
                         '- Identifiers beginning with PL must contain 16 or 32 characters after the prefix.\n' \
@@ -93,7 +107,7 @@ def main(*args):
     parser.add_argument('-v', '--verbose',
                         action='store_true', help=verbose_help)
     
-    save_help = 'File path to save the results. Creates a txt or html file with the given name.'
+    save_help = 'File path to save the results. Creates a txt, html, or json file with the given name.'
     parser.add_argument('-s', '--save',
                         type=str, metavar='FILE', help=save_help)
 

@@ -71,7 +71,9 @@ The dot represents the current folder, which should be the folder where the `pyp
 
 Get the list of available options.
 ```
-> ytfc -h
+ytfc -h
+```
+```
 usage: ytfc [-h] [-i ID [ID ...]] [-r FILE] [-n N] [-v] [-s FILE] [-np]
 
 This CLI parses RSS feeds and outputs a list of YouTube videos, shorts, and live streams.
@@ -89,7 +91,7 @@ options:
 
 Without the `--ids` or `--read` options, the CLI shows usage examples.
 ```
-> ytfc
+ytfc
 ```
 
 ## Main options
@@ -112,7 +114,7 @@ Another option is to use a list of identifiers stored in a text file.
 ytfc -r <local path to text file>
 ```
 
-Identifiers must be separated by newlines. You can add comments after the # symbol. Example file content:
+Each identifier must be on a new line. You can add comments after the # symbol. Example file content:
 ```
 # Channels:
 
@@ -158,9 +160,9 @@ ytfc -i @youtube -r <local path to text file> -n 1 -v
 
 ### `--number`
 
-Limit the number of entries in the output. The number of entries in the RSS feed is up to 15.
+Limit the number of entries in the output for each ID. The number of entries in the RSS feed is up to 15.
 ```
-ytfc -i @youtube -n 5
+ytfc -i UULFBR8-60-B28hp2BmDPdntcQ UUSHBR8-60-B28hp2BmDPdntcQ -n 5
 ```
 
 
@@ -214,7 +216,7 @@ Creates a text file and saves the result as it was printed.
 ytfc -i @youtube -s <local path>/output.txt
 ```
 
-Creates a text file and saves the result as an HTML document. Feed entries will be embedded in the HTML code.
+Creates a text file and saves the result as an HTML document.
 ```
 ytfc -i @youtube -s <local path>/output.html
 ```

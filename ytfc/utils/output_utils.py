@@ -148,27 +148,21 @@ class Output:
                         {"error_message": f'Failed to get feed from: {xml_url}'})
                 print(f'Failed to get feed from: {xml_url}\n')
 
-    def save_to_file(self, filename: str):
-        raise NotImplementedError
 
-
-class TXTOutput(Output):
-    def save_to_file(self, filename: str) -> None:
+class TXTFormat:
+    def save_to_file(self, filename: str, output: dict) -> None:
         """Creates a text file and saves the output.
 
-        self.output - result of feed parsing, created by the generate_output function.
-
         :param filename: "path/to/file.txt", args.save value
+        :param output: result of feed parsing, created by the Output.generate_output
         :return: None
         """
-        if self.output is None:
-            raise TypeError('There is nothing to save to file. '
-                            'Use self.generate_output(<verbose>, <number>, <no_print>, save=True) first.')
+        ids = output["feeds"].keys()
         with open(filename, 'w', encoding='utf-8') as f:
             f.write("Feeds\n")
-            f.write(f'Created (UTC):{self.output["created_utc"]}\n')
-            f.write(f'Youtube IDs: {", ".join(self.ids)}\n\n')
-            for k, v in self.output["feeds"].items():
+            f.write(f'Created (UTC):{output["created_utc"]}\n')
+            f.write(f'Youtube IDs: {", ".join(ids)}\n\n')
+            for k, v in output["feeds"].items():
                 f.write(f'\n=== {k} ===\n\n')
                 # feed info: CHANNEL FEED, PLAYLIST FEED
                 if v["feed_info"]:
@@ -188,30 +182,27 @@ class TXTOutput(Output):
                 f.write('\n')
 
 
-class HTMLOutput(Output):
-    def save_to_file(self, filename: str) -> None:
+class HTMLFormat:
+    def save_to_file(self, filename: str, output: dict) -> None:
         """Creates a text file and saves the result as an HTML document.
 
-        self.output - result of feed parsing, created by the generate_output function.
-
         :param filename: "path/to/file.html", args.save value
+        :param output: result of feed parsing, created by the Output.generate_output
         :return: None
         """
-        if self.output is None:
-            raise TypeError('There is nothing to save to file. '
-                            'Use self.generate_output(<verbose>, <number>, <no_print>, save=True) first.')
+        ids = output["feeds"].keys()
         with open(filename, 'w', encoding='utf-8') as f:
-            html_ids = [f'yt-id{index}' for index, yt_id in enumerate(self.ids)]
+            html_ids = [f'yt-id{index}' for index, yt_id in enumerate(ids)]
             f.write(f'{html_begin}\n')
             f.write("<h1>Feeds</h1>\n")
-            f.write(f'<div class="yt-ids"><p>Created (UTC): {self.output["created_utc"]}</p>')
+            f.write(f'<div class="yt-ids"><p>Created (UTC): {output["created_utc"]}</p>')
             f.write('<div>Youtube IDs:</div>')
-            for html_id, yt_id in zip(html_ids, self.ids):
+            for html_id, yt_id in zip(html_ids, ids):
                 f.write(f'<div><a href="#{html_id}">{yt_id}</a></div>')
             f.write('</div><br>\n')  # close yt-ids
 
             # feed info: CHANNEL FEED, PLAYLIST FEED
-            for k, v in self.output["feeds"].items():
+            for k, v in output["feeds"].items():
                 f.write(f'<h2 id="{html_ids.pop(0)}">{k}</h2>\n')
                 verbose = len(v["feed_info"]) > 3
                 if v["feed_info"]:
@@ -275,17 +266,13 @@ class HTMLOutput(Output):
             f.write(html_end)
 
 
-class JSONOutput(Output):
-    def save_to_file(self, filename: str) -> None:
+class JSONFormat:
+    def save_to_file(self, filename: str, output: dict) -> None:
         """Creates a text file and saves the result as JSON document.
 
-        self.output - result of feed parsing, created by the generate_output function.
-
         :param filename: "path/to/file.json", args.save value
+        :param output: result of feed parsing, created by the Output.generate_output
         :return: None
         """
-        if self.output is None:
-            raise TypeError('There is nothing to save to file. '
-                            'Use self.generate_output(<verbose>, <number>, <no_print>, save=True) first.')
         with open(filename, 'w', encoding='utf-8') as f:
-            dump(self.output, f, indent=2)
+            dump(output, f, indent=2)

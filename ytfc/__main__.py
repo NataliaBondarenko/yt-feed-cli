@@ -62,7 +62,7 @@ import os.path
 
 from ytfc.utils.decorators import python_exceptions
 from ytfc.utils.cli_utils import check_ids
-from ytfc.utils.output_utils import Output, TXTOutput, HTMLOutput, JSONOutput
+from ytfc.utils.output_utils import Output, TXTFormat, HTMLFormat, JSONFormat
 
 
 supported_ids_message = '\nSupported identifiers\n\n' \
@@ -157,15 +157,16 @@ def main(*args):
     if args.save:
         if args.no_print:
             print('Please wait.\n')
-        if extension == 'txt':
-            o = TXTOutput(yt_ids)
-        elif extension == 'html':
-            o = HTMLOutput(yt_ids)
-        elif extension == 'json':
-            o = JSONOutput(yt_ids)
+        o = Output(yt_ids)
         o.generate_output(verbose=args.verbose, number=args.number, no_print=args.no_print, save=True)
+        if extension == 'txt':
+            s = TXTFormat()
+        elif extension == 'html':
+            s = HTMLFormat()
+        elif extension == 'json':
+            s = JSONFormat()
         print(f'Saving the results to {args.save}.')
-        o.save_to_file(args.save)
+        s.save_to_file(args.save, o.output)
         print('Done.')
     else:
         o = Output(yt_ids)
